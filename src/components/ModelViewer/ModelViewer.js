@@ -5,8 +5,7 @@ import Help from "./Help";
 const ModelViewer = ({ item }) => {
   const [display, setDisplay] = useState(false);
   const [ARSupported, setARSupported] = useState(false);
-  
-  
+
   let modelViewer1 = {
     backgroundColor: " #ecf0f3",
     overflowX: "hidden",
@@ -15,7 +14,7 @@ const ModelViewer = ({ item }) => {
     height: ARSupported ? "85%" : "75%",
     borderRadius: 15,
   };
-  
+
   // Accessing product for full screen start
   const model = useRef();
 
@@ -23,7 +22,6 @@ const ModelViewer = ({ item }) => {
   const varient = useRef(null);
 
   // Full screen code end
-
 
   useEffect(() => {
     if (
@@ -41,26 +39,9 @@ const ModelViewer = ({ item }) => {
 
   useEffect(() => {
     // set up event listeners
-    const modelViewer = model.current
-    modelViewer &&
-    modelViewer.addEventListener('load', () => {
-      console.log('loaded')
-      const availableVariants = modelViewer?.availableVariants;
-      console.log(availableVariants)
-      for (const variant of availableVariants) {
-        const option = document.createElement('option');
-        option.value = variant;
-        option.textContent = variant;
-        varient?.current?.appendChild(option);
-      }
-    });
-
-    varient?.current?.addEventListener('input', (event) => {
-      modelViewer.variantName = event.target.value === 'Default' ? null : event.target.value;
-    });
+    const modelViewer = model.current;
+    modelViewer && modelViewer.addEventListener("load", () => {});
   }, []);
-
- 
 
   return (
     <div className="model-view">
@@ -75,9 +56,7 @@ const ModelViewer = ({ item }) => {
         ar-modes="webxr scene-viewer quick-look"
         camera-controls
         auto-rotate
-
       >
-
         {ARSupported && (
           <button slot="ar-button" className="arbutton">
             View in your space
@@ -100,14 +79,8 @@ const ModelViewer = ({ item }) => {
             </button>
           </>
         )}
-       
-        
-        <div class="controls variant_div">
-          <select ref={varient} id="variant"></select>
-        </div>
-
       </model-viewer>
-        
+
       <LazyLoad>
         <div className="qr-sec">
           {!ARSupported && (
