@@ -11,17 +11,11 @@ const ModelViewer = ({ item }) => {
     overflowX: "hidden",
     posterColor: "#eee",
     width: "100%",
-    height: ARSupported ? "85%" : "75%",
-    borderRadius: 15,
+    height: ARSupported ? "85%" : "calc(100vh - 380px)",
   };
 
   // Accessing product for full screen start
   const model = useRef();
-
-  // Accessing varient selections element
-  const varient = useRef(null);
-
-  // Full screen code end
 
   useEffect(() => {
     if (
@@ -75,7 +69,7 @@ const ModelViewer = ({ item }) => {
         ) : (
           <>
             <button className="help-btn" onClick={() => setDisplay(true)}>
-              ?<span>help</span>
+              ?<span>Help</span>
             </button>
           </>
         )}
