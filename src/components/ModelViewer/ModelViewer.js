@@ -7,6 +7,7 @@ const ModelViewer = ({ item }) => {
   const [display, setDisplay] = useState(false);
   const [ARSupported, setARSupported] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
 
@@ -21,16 +22,18 @@ const ModelViewer = ({ item }) => {
   const model = useRef();
 
   useEffect(() => {
+    const userAgent = navigator.userAgent.toLowerCase();
     if (
-      navigator.userAgent.match(/iPhone/i) ||
-      navigator.userAgent.match(/webOS/i) ||
-      navigator.userAgent.match(/Android/i) ||
-      navigator.userAgent.match(/iPad/i) ||
-      navigator.userAgent.match(/iPod/i) ||
-      navigator.userAgent.match(/BlackBerry/i) ||
-      navigator.userAgent.match(/Windows Phone/i)
+      userAgent.match(/iphone/i) ||
+      userAgent.match(/webos/i) ||
+      userAgent.match(/android/i) ||
+      userAgent.match(/ipad/i) ||
+      userAgent.match(/ipod/i) ||
+      userAgent.match(/blackberry/i) ||
+      userAgent.match(/windows phone/i)
     ) {
       setARSupported(true);
+      setIsMobile(true);
     }
   }, []);
 
@@ -40,7 +43,13 @@ const ModelViewer = ({ item }) => {
   }, []);
 
   const startRecording = async () => {
-    const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+    let stream;
+    if (isMobile) {
+      stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    } else {
+      stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+    }
+    
     mediaRecorderRef.current = new MediaRecorder(stream);
     chunksRef.current = [];
 
