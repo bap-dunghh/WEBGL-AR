@@ -350,15 +350,9 @@
     left: 2.7rem;
     top: 0.3rem;
   }
-  .model-view {
-    width: 80vw;
-  }
 }
 
 @media (max-width: 375px) {
-  .model-view {
-
-  }
   .qr-sec {
     flex-direction: row;
     align-items: center;
@@ -369,9 +363,6 @@
   .help-btn span {
     left: 2.7rem;
     top: 0.3rem;
-  }
-  .model-view {
-    width: 80vw;
   }
 }
 
@@ -389,9 +380,7 @@
     left: 2.7rem;
     top: 0.3rem;
   }
-  .model-view {
-    width: 90vw;
-  }
+
   .list-view {
     width: 50vw;
     height: auto;

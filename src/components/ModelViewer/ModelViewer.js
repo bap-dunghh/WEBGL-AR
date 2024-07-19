@@ -11,7 +11,7 @@ const ModelViewer = ({ item }) => {
     overflowX: "hidden",
     posterColor: "#eee",
     width: "100%",
-    height: ARSupported ? "85%" : "calc(100vh - 380px)",
+    height: ARSupported ? "calc(100vh - 350px)" : "calc(100vh - 380px)",
   };
 
   // Accessing product for full screen start
