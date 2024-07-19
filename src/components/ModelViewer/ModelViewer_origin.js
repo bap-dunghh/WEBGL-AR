@@ -2,13 +2,9 @@ import React, { useRef, useState, useEffect } from "react";
 import LazyLoad from "react-lazyload";
 import QRCode from "qrcode.react";
 import Help from "./Help";
-
 const ModelViewer = ({ item }) => {
   const [display, setDisplay] = useState(false);
   const [ARSupported, setARSupported] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
-  const mediaRecorderRef = useRef(null);
-  const chunksRef = useRef([]);
 
   let modelViewer1 = {
     backgroundColor: " #ecf0f3",
@@ -18,6 +14,7 @@ const ModelViewer = ({ item }) => {
     height: ARSupported ? "calc(100vh - 350px)" : "calc(100vh - 380px)",
   };
 
+  // Accessing product for full screen start
   const model = useRef();
 
   useEffect(() => {
@@ -35,38 +32,10 @@ const ModelViewer = ({ item }) => {
   }, []);
 
   useEffect(() => {
+    // set up event listeners
     const modelViewer = model.current;
     modelViewer && modelViewer.addEventListener("load", () => {});
   }, []);
-
-  const startRecording = async () => {
-    const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-    mediaRecorderRef.current = new MediaRecorder(stream);
-    chunksRef.current = [];
-
-    mediaRecorderRef.current.ondataavailable = (event) => {
-      if (event.data.size > 0) {
-        chunksRef.current.push(event.data);
-      }
-    };
-
-    mediaRecorderRef.current.onstop = () => {
-      const blob = new Blob(chunksRef.current, { type: 'video/webm' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'recording.webm';
-      a.click();
-    };
-
-    mediaRecorderRef.current.start();
-    setIsRecording(true);
-  };
-
-  const stopRecording = () => {
-    mediaRecorderRef.current.stop();
-    setIsRecording(false);
-  };
 
   return (
     <div className="model-view">
@@ -104,9 +73,6 @@ const ModelViewer = ({ item }) => {
             </button>
           </>
         )}
-        <button onClick={isRecording ? stopRecording : startRecording} className="record-btn">
-          {isRecording ? 'Stop Recording' : 'Record Screen'}
-        </button>
       </model-viewer>
 
       <LazyLoad>
