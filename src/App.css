@@ -19,9 +19,11 @@
   cursor: pointer;
   scroll-behavior: smooth;
 }
+
 .model-view {
   transition: all 1s;
 }
+
 .Hotspot {
   padding: 1em;
   background-color: white;
@@ -74,11 +76,13 @@
   align-items: center;
   justify-content: center;
 }
+
 .single {
   padding-left: 1rem;
   /* color: rgb(219, 216, 216); */
   color: #000;
 }
+
 .single p {
   font-size: 12px;
 }
@@ -114,20 +118,26 @@
   font-size: 1.5rem;
   padding: 0.2rem;
 }
+
 .fullscreen-btn span {
-  min-width: 100px; /* Adjust as needed */
+  min-width: 100px;
+  /* Adjust as needed */
 }
 
 .help-btn span {
-  width: 50px; /* Adjust as needed */
+  width: 50px;
+  /* Adjust as needed */
 }
 
 
 .help-btn span,
 .fullscreen-btn span {
-  display: flex; /* Added */
-  align-items: center; /* Added */
-  justify-content: center; /* Added */
+  display: flex;
+  /* Added */
+  align-items: center;
+  /* Added */
+  justify-content: center;
+  /* Added */
   min-height: 30px;
   display: none;
   position: absolute;
@@ -137,13 +147,18 @@
   padding: 20% 20%;
   border-radius: 10px;
 }
+
 /* .help-btn:hover span, */
 .fullscreen-btn:hover span {
-  display: flex; /* Added */
-  align-items: center; /* Added */
-  justify-content: center; /* Added */
+  display: flex;
+  /* Added */
+  align-items: center;
+  /* Added */
+  justify-content: center;
+  /* Added */
   width: 55px;
 }
+
 .fullscreen-btn {
   background-color: rgba(0, 0, 0, 0.284);
   border-radius: 100%;
@@ -164,8 +179,8 @@
   line-height: 0;
 }
 
-.variant_div select{
-  top:18px;
+.variant_div select {
+  top: 18px;
   position: absolute;
   right: 3.3rem;
   color: rgb(82, 78, 78);
@@ -198,6 +213,7 @@
 .fz {
   font-size: 30px;
 }
+
 .fz p {
   font-size: 25px;
 }
@@ -233,6 +249,7 @@
   right: 0;
   bottom: 0;
 }
+
 .help-mob {
   position: relative;
   right: -2px;
@@ -243,9 +260,11 @@
   display: flex;
   gap: 5px;
 }
+
 .star {
   color: #e8ba47;
 }
+
 .pname {
   font-size: large;
   font-weight: bold;
@@ -275,16 +294,19 @@
 
 /*----------- Responsiveness ---------- */
 @media (max-width: 912px) {
+
   .help-btn,
   .fullscreen-btn {
     top: unset;
     left: unset;
   }
+
   .fullscreen-btn span,
   .help-btn span {
     left: 2.7rem;
     top: 0.3rem;
   }
+
   .list-view {
     grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
     width: 100%;
@@ -295,10 +317,12 @@
     place-items: center;
   }
 }
+
 @media (max-width: 560px) {
   .model-view {
     height: calc(100vh - 240px);
   }
+
   .help-btn {
     top: 4rem;
     left: 1rem;
@@ -308,6 +332,7 @@
     top: 1rem;
     left: 1rem;
   }
+
   .fullscreen-btn span,
   .help-btn span {
     left: 2.7rem;
@@ -328,6 +353,7 @@
 }
 
 @media (max-width: 400px) {
+
   /* .model-view {
     width: 60vw;
   }
@@ -341,10 +367,12 @@
     top: 4rem;
     left: 1rem;
   }
+
   .fullscreen-btn {
     top: 1rem;
     left: 1rem;
   }
+
   .fullscreen-btn span,
   .help-btn span {
     left: 2.7rem;
@@ -359,6 +387,7 @@
     padding: 0 10px;
     margin-top: 20px;
   }
+
   .fullscreen-btn span,
   .help-btn span {
     left: 2.7rem;
@@ -371,10 +400,12 @@
     top: 4rem;
     left: 0.5rem;
   }
+
   .fullscreen-btn {
     top: 1rem;
     left: 0.5rem;
   }
+
   .fullscreen-btn span,
   .help-btn span {
     left: 2.7rem;
@@ -390,6 +421,7 @@
     place-items: center;
     justify-content: center;
   }
+
   .qr-sec {
     flex-direction: row;
     align-items: center;
@@ -397,4 +429,12 @@
     padding: 0 0;
     margin-top: 5px;
   }
+}
+
+
+.controls {
+  display: flex;
+  gap: 20px;
+  padding-top: 10px;
+  padding-left: 10px;
 }
