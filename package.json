@@ -1,7 +1,7 @@
 {
   "name": "ar-webstore",
   "version": "0.1.0",
-  "description": "Webstore built to showcase photorealistic 3D digital objects in AR",
+  "description": "Demo thôi",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
