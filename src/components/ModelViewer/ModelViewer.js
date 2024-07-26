@@ -10,6 +10,7 @@ const ModelViewer = ({ item }) => {
   const [brightness, setBrightness] = useState(1);
   const [shadowIntensity, setShadowIntensity] = useState(1);
   const [zoom, setZoom] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   let modelViewerStyle = {
     backgroundColor: bgColor,
@@ -40,11 +41,19 @@ const ModelViewer = ({ item }) => {
   useEffect(() => {
     // set up event listeners
     const modelViewer = model.current;
-    modelViewer && modelViewer.addEventListener("load", () => {});
+    if (modelViewer) {
+      modelViewer.addEventListener("load", () => setLoading(false));
+      modelViewer.addEventListener("preload", () => setLoading(true));
+    }
   }, []);
 
   return (
     <div className="model-view">
+      {loading && (
+        <div className="loading-overlay">
+          <div className="spinner">Loading...</div>
+        </div>
+      )}
       <model-viewer
         key={item.id}
         ref={model}
@@ -62,6 +71,9 @@ const ModelViewer = ({ item }) => {
         exposure="1"
         shadow-softness="1"
         scale={`${zoom} ${zoom} ${zoom}`}
+        interaction-prompt="none"
+        onLoad={() => setLoading(false)}
+        onPreload={() => setLoading(true)}
       >
         <directional-light
           slot="lighting"
