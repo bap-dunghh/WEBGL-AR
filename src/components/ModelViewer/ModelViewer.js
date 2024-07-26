@@ -11,13 +11,14 @@ const ModelViewer = ({ item }) => {
   const [shadowIntensity, setShadowIntensity] = useState(1);
   const [zoom, setZoom] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [controlsVisible, setControlsVisible] = useState(false);
 
   let modelViewerStyle = {
     backgroundColor: bgColor,
     overflowX: "hidden",
     posterColor: "#eee",
     width: "100%",
-    height: ARSupported ? "calc(100vh - 365px)" : "calc(100vh - 360px)",
+    height: ARSupported ? "calc(100vh - 185px)" : "calc(100vh - 360px)",
     filter: `brightness(${brightness})`,
   };
 
@@ -86,7 +87,7 @@ const ModelViewer = ({ item }) => {
             {/* View in your space */}
           </button>
         )}
-        {display ? (
+        {/* {display ? (
           <>
             <button
               className={document.fullscreenElement ? "close fz" : "close"}
@@ -102,53 +103,108 @@ const ModelViewer = ({ item }) => {
               ?<span>Help</span>
             </button>
           </>
-        )}
+        )} */}
       </model-viewer>
+      {ARSupported ? (
+        <>
+          <button
+            className="toggle-controls-btn"
+            onClick={() => setControlsVisible(!controlsVisible)}
+          >
+            {controlsVisible ? "Hide Controls" : "Show Controls"}
+          </button>
 
-      <div className="controls">
-        <label>
-          Background Color:
-          <input
-            type="color"
-            value={bgColor}
-            onChange={(e) => setBgColor(e.target.value)}
-          />
-        </label>
-        <label>
-          Brightness:
-          <input
-            type="range"
-            min="0.1"
-            max="2"
-            step="0.1"
-            value={brightness}
-            onChange={(e) => setBrightness(e.target.value)}
-          />
-        </label>
-        <label>
-          Shadow Intensity:
-          <input
-            type="range"
-            min="0"
-            max="2"
-            step="0.1"
-            value={shadowIntensity}
-            onChange={(e) => setShadowIntensity(e.target.value)}
-          />
-        </label>
-        <label>
-          Zoom:
-          <input
-            type="range"
-            min="0.5"
-            max="3"
-            step="0.1"
-            value={zoom}
-            onChange={(e) => setZoom(e.target.value)}
-          />
-        </label>
-      </div>
-
+          <div className={`controls ${controlsVisible ? "visible" : "hidden"}`}>
+            <label>
+              Background Color
+              <input
+                type="color"
+                value={bgColor}
+                onChange={(e) => setBgColor(e.target.value)}
+              />
+            </label>
+            <label>
+              Brightness
+              <input
+                type="range"
+                min="0.1"
+                max="2"
+                step="0.1"
+                value={brightness}
+                onChange={(e) => setBrightness(e.target.value)}
+              />
+            </label>
+            <label>
+              Shadow Intensity
+              <input
+                type="range"
+                min="0"
+                max="2"
+                step="0.1"
+                value={shadowIntensity}
+                onChange={(e) => setShadowIntensity(e.target.value)}
+              />
+            </label>
+            <label>
+              Zoom
+              <input
+                type="range"
+                min="0.5"
+                max="3"
+                step="0.1"
+                value={zoom}
+                onChange={(e) => setZoom(e.target.value)}
+              />
+            </label>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={`controls`}>
+            <label>
+              Background Color
+              <input
+                type="color"
+                value={bgColor}
+                onChange={(e) => setBgColor(e.target.value)}
+              />
+            </label>
+            <label>
+              Brightness
+              <input
+                type="range"
+                min="0.1"
+                max="2"
+                step="0.1"
+                value={brightness}
+                onChange={(e) => setBrightness(e.target.value)}
+              />
+            </label>
+            <label>
+              Shadow Intensity
+              <input
+                type="range"
+                min="0"
+                max="2"
+                step="0.1"
+                value={shadowIntensity}
+                onChange={(e) => setShadowIntensity(e.target.value)}
+              />
+            </label>
+            <label>
+              Zoom
+              <input
+                type="range"
+                min="0.5"
+                max="3"
+                step="0.1"
+                value={zoom}
+                onChange={(e) => setZoom(e.target.value)}
+              />
+            </label>
+          </div>
+        </>
+      )}
       <LazyLoad>
         <div className="qr-sec">
           {!ARSupported && (
