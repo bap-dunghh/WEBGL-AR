@@ -1,16 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import { Helmet } from "react-helmet";
+import { metaConfig } from "./config";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <>
+    <Helmet>
+      <title>{metaConfig.title}</title>
+      <meta name="description" content={metaConfig.description} />
+      <meta name="keywords" content={metaConfig.keywords} />
+      <meta name="robots" content={metaConfig.robots} />
+      <meta name="language" content={metaConfig.language} />
+      <meta name="revisit-after" content={metaConfig.revisitAfter} />
+      <meta name="distribution" content={metaConfig.distribution} />
+      <meta name="geo.region" content={metaConfig.region} />
+      <meta name="googlebot" content={metaConfig.googlebot} />
+      <meta
+        http-equiv="content-language"
+        content={metaConfig.contentLanguage}
+      />
+      <meta property="og:title" content={metaConfig.ogTitle} />
+      <meta property="og:description" content={metaConfig.ogDescription} />
+      <meta property="og:image" content={metaConfig.ogImage} />
+      <meta property="og:url" content={metaConfig.ogUrl} />
+      <meta property="og:type" content={metaConfig.ogType} />
+      <meta property="og:site_name" content={metaConfig.ogSiteName} />
+      <meta property="og:video" content={metaConfig.ogVideo} />
+      <meta property="og:author" content={metaConfig.ogAuthor} />
+      <meta property="og:locale" content={metaConfig.ogLocale} />
+      <meta property="og:website:author" content={metaConfig.ogWebsiteAuthor} />
+      <link rel="canonical" href={metaConfig.canonical} />
+    </Helmet>
     <App />
-</React.StrictMode>,
-  document.getElementById('root')
+  </>,
+  document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();

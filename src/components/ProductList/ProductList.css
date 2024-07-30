@@ -11,16 +11,29 @@
 }
 
 .list-select-model {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
   background-color: rgb(15, 13, 13);
   padding: 16px 0px;
   position: fixed;
   bottom: 0;
   width: 100%;
   z-index: 100;
-  align-items: center;
+}
+
+.list-select-view {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  max-width: calc(100% - 50px);
+  overflow-x: auto;
+  margin: 0 auto;
+  padding: 5px 0;
+}
+
+@media screen and (max-width: 768px) {
+  .list-select-view {
+    justify-content: start;
+  }
+  
 }
 
 .list-select-model .list-item {

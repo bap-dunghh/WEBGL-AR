@@ -40,5 +40,5 @@ const productItems = [
     category: "Shoes",
     color: "",
   },
-];
+]
 export default productItems;

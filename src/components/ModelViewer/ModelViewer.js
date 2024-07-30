@@ -1,15 +1,21 @@
 import React, { useRef, useState, useEffect } from "react";
 import LazyLoad from "react-lazyload";
 import QRCode from "qrcode.react";
-import Help from "./Help";
+// import Help from "./Help";
+import { configGlobal } from "../../config";
 
 const ModelViewer = ({ item }) => {
-  const [display, setDisplay] = useState(false);
   const [ARSupported, setARSupported] = useState(false);
-  const [bgColor, setBgColor] = useState("#ecf0f3");
-  const [brightness, setBrightness] = useState(1);
-  const [shadowIntensity, setShadowIntensity] = useState(1);
-  const [zoom, setZoom] = useState(1);
+  const [bgColor, setBgColor] = useState(
+    configGlobal.control.options.defaultBackgroundColor
+  );
+  const [brightness, setBrightness] = useState(
+    configGlobal.control.options.defaultBrightness
+  );
+  const [shadowIntensity, setShadowIntensity] = useState(
+    configGlobal.control.options.defaultShadowIntensity
+  );
+  const [zoom, setZoom] = useState(configGlobal.control.options.defaultZoom);
   const [loading, setLoading] = useState(true);
   const [controlsVisible, setControlsVisible] = useState(false);
 
@@ -47,6 +53,79 @@ const ModelViewer = ({ item }) => {
       modelViewer.addEventListener("preload", () => setLoading(true));
     }
   }, []);
+  const ListControls = (
+    <>
+      {configGlobal.control.options.showBackgroundColor && (
+        <label>
+          Background Color
+          <input
+            type="color"
+            value={bgColor}
+            onChange={(e) => setBgColor(e.target.value)}
+          />
+        </label>
+      )}
+      {configGlobal.control.options.showBrightness && (
+        <label>
+          Brightness
+          <input
+            type="range"
+            min={configGlobal.control.options.minBrightness}
+            max={configGlobal.control.options.maxBrightness}
+            step={configGlobal.control.options.stepBrightness}
+            value={brightness}
+            onChange={(e) => setBrightness(e.target.value)}
+          />
+        </label>
+      )}
+      {configGlobal.control.options.showShadowIntensity && (
+        <label>
+          Shadow Intensity
+          <input
+            type="range"
+            min={configGlobal.control.options.minShadowIntensity}
+            max={configGlobal.control.options.maxShadowIntensity}
+            step={configGlobal.control.options.stepShadowIntensity}
+            value={shadowIntensity}
+            onChange={(e) => setShadowIntensity(e.target.value)}
+          />
+        </label>
+      )}
+      {configGlobal.control.options.showZoom && (
+        <label>
+          Zoom
+          <input
+            type="range"
+            min={configGlobal.control.options.minZoom}
+            max={configGlobal.control.options.maxZoom}
+            step={configGlobal.control.options.stepZoom}
+            value={zoom}
+            onChange={(e) => setZoom(e.target.value)}
+          />
+        </label>
+      )}
+    </>
+  );
+  const Control = ARSupported ? (
+    <>
+      <button
+        className="toggle-controls-btn"
+        onClick={() => setControlsVisible(!controlsVisible)}
+      >
+        {controlsVisible ? "Hide Controls" : "Show Controls"}
+      </button>
+
+      <div className={`controls ${controlsVisible ? "visible" : "hidden"}`}>
+        {ListControls}
+      </div>
+    </>
+  ) : (
+    <div style={{
+      textAlign: '-webkit-center'
+    }}>
+      <div className={`controls`}>{ListControls}</div>
+    </div>
+  );
 
   return (
     <div className="model-view">
@@ -62,7 +141,7 @@ const ModelViewer = ({ item }) => {
         src={item.modelSrc}
         ios-src={item.iOSSrc}
         alt="A 3D model"
-        ar
+        {...(ARSupported && item.showAR && { ar: true })}
         ar-modes="webxr scene-viewer quick-look"
         camera-controls
         disable-pan
@@ -71,10 +150,12 @@ const ModelViewer = ({ item }) => {
         environment-image="neutral"
         exposure="1"
         shadow-softness="1"
+        ar-scale={configGlobal.modelViewer.arScale}
         scale={`${zoom} ${zoom} ${zoom}`}
         interaction-prompt="none"
         onLoad={() => setLoading(false)}
         onPreload={() => setLoading(true)}
+        // xr-environment
       >
         <directional-light
           slot="lighting"
@@ -82,11 +163,10 @@ const ModelViewer = ({ item }) => {
           shadow-bias="-0.001"
         ></directional-light>
 
-        {ARSupported && (
+        {/* {ARSupported && item.showAR && (
           <button slot="ar-button" className="arbutton">
-            {/* View in your space */}
           </button>
-        )}
+        )} */}
         {/* {display ? (
           <>
             <button
@@ -105,106 +185,7 @@ const ModelViewer = ({ item }) => {
           </>
         )} */}
       </model-viewer>
-      {ARSupported ? (
-        <>
-          <button
-            className="toggle-controls-btn"
-            onClick={() => setControlsVisible(!controlsVisible)}
-          >
-            {controlsVisible ? "Hide Controls" : "Show Controls"}
-          </button>
-
-          <div className={`controls ${controlsVisible ? "visible" : "hidden"}`}>
-            <label>
-              Background Color
-              <input
-                type="color"
-                value={bgColor}
-                onChange={(e) => setBgColor(e.target.value)}
-              />
-            </label>
-            <label>
-              Brightness
-              <input
-                type="range"
-                min="0.1"
-                max="2"
-                step="0.1"
-                value={brightness}
-                onChange={(e) => setBrightness(e.target.value)}
-              />
-            </label>
-            <label>
-              Shadow Intensity
-              <input
-                type="range"
-                min="0"
-                max="2"
-                step="0.1"
-                value={shadowIntensity}
-                onChange={(e) => setShadowIntensity(e.target.value)}
-              />
-            </label>
-            <label>
-              Zoom
-              <input
-                type="range"
-                min="0.5"
-                max="3"
-                step="0.1"
-                value={zoom}
-                onChange={(e) => setZoom(e.target.value)}
-              />
-            </label>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className={`controls`}>
-            <label>
-              Background Color
-              <input
-                type="color"
-                value={bgColor}
-                onChange={(e) => setBgColor(e.target.value)}
-              />
-            </label>
-            <label>
-              Brightness
-              <input
-                type="range"
-                min="0.1"
-                max="2"
-                step="0.1"
-                value={brightness}
-                onChange={(e) => setBrightness(e.target.value)}
-              />
-            </label>
-            <label>
-              Shadow Intensity
-              <input
-                type="range"
-                min="0"
-                max="2"
-                step="0.1"
-                value={shadowIntensity}
-                onChange={(e) => setShadowIntensity(e.target.value)}
-              />
-            </label>
-            <label>
-              Zoom
-              <input
-                type="range"
-                min="0.5"
-                max="3"
-                step="0.1"
-                value={zoom}
-                onChange={(e) => setZoom(e.target.value)}
-              />
-            </label>
-          </div>
-        </>
-      )}
+      {configGlobal.control.show && Control}
       <LazyLoad>
         <div className="qr-sec">
           {!ARSupported && (
@@ -219,23 +200,27 @@ const ModelViewer = ({ item }) => {
             />
           )}
 
-          <div className="product-details">
-            <div>
-              <div className="pname">{item.name}</div>
-              <div className="rating-sec">
-                <div>Rating</div>
-                <div>
-                  <span className="star">&#9733;</span>
-                  <span className="star">&#9733;</span>
-                  <span className="star">&#9733;</span>
-                  <span>&#9733;</span>
-                  <span>&#9733;</span>
+          {item.showDetails && (
+            <div className="product-details">
+              <div>
+                <div className="pname">{item.name}</div>
+                <div className="rating-sec">
+                  <div>Rating</div>
+                  <div>
+                    {Array.from({ length: 5 }, (_, index) => (
+                      <span key={index} className="star">
+                        {index < item.rating ? "★" : "☆"}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+                <div>Rs. {item.price}</div>
+                {!ARSupported && (
+                  <h5>Scan the QR code for AR View on mobile</h5>
+                )}
               </div>
-              <div>Rs. 1000</div>
-              {!ARSupported && <h5>Scan the QR code for AR View on mobile</h5>}
             </div>
-          </div>
+          )}
         </div>
       </LazyLoad>
     </div>

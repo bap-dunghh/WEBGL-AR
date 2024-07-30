@@ -1,40 +1,19 @@
 import React from "react";
-import productItems from "../../data/ProductItems";
+// import productItems from "../../data/ProductItems";
 import ModelViewer from "../ModelViewer/ModelViewer";
 import "./ProductList.css";
 import LazyLoad from "react-lazyload";
-import shoes_01 from "../../assets/thumbnails/1.png";
-import shoes_02 from "../../assets/thumbnails/2.png";
-import shoes_03 from "../../assets/thumbnails/3.png";
-import shoes_04 from "../../assets/thumbnails/4.png";
+import { configGlobal } from "../../config";
 
-const LIST = [
-  {
-    src: shoes_01,
-    alt: "Shoes 01",
-    index: 0,
-  },
-  {
-    src: shoes_02,
-    alt: "Shoes 02",
-    index: 1,
-  },
-  {
-    src: shoes_03,
-    alt: "Shoes 03",
-    index: 2,
-  },
-  {
-    src: shoes_04,
-    alt: "Shoes 04",
-    index: 3,
-  },
-];
+const productItems = configGlobal.products;
+const LIST = configGlobal.thumbnails;
+
 
 const ListSelectModel = ({ setProductItem }) => {
   return (
     <div className="list-select-model">
-      {LIST.map((item) => (
+       <div className="list-select-view">
+       {LIST.map((item) => (
         <LazyLoad key={item.index}>
           <div
             className="list-item"
@@ -45,6 +24,7 @@ const ListSelectModel = ({ setProductItem }) => {
           </div>
         </LazyLoad>
       ))}
+       </div>
     </div>
   );
 };
