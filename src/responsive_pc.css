@@ -1,0 +1,17 @@
+.qr-sec {
+    flex-direction: column;
+}
+
+.qr-sec .product-details {
+    width: 190px;
+    max-width: 90%;
+
+}
+
+.qr-sec .product-details .pname {
+    font-size: x-large;
+}
+
+.model-view {
+    display: flex;
+}

@@ -1,3 +1,5 @@
+@import './responsive_pc.css' screen and (min-width: 768px);
+
 .arbutton {
   background-image: url(./assets/ic_view_in_ar_new_googblue_48dp.png);
   background-repeat: no-repeat;
@@ -238,7 +240,7 @@
 .model-view {
   width: 100%;
   position: relative;
-  height: calc(100vh - 210px);
+  height: calc(100vh - 140px);
 }
 
 .fullscreen-mob {
@@ -429,6 +431,7 @@
 }
 
 
+
 .controls {
   display: flex;
   justify-content: space-around;
@@ -497,7 +500,8 @@
     cursor: pointer;
     z-index: 1000;
   }
-  .product-details > div {
+
+  .product-details>div {
     display: flex;
     gap: 20px;
   }

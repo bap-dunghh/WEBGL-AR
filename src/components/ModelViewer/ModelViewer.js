@@ -3,19 +3,20 @@ import LazyLoad from "react-lazyload";
 import QRCode from "qrcode.react";
 // import Help from "./Help";
 import { configGlobal } from "../../config";
+import { useLocation } from "react-router-dom";
 
 const ModelViewer = ({ item }) => {
   const [ARSupported, setARSupported] = useState(false);
   const [bgColor, setBgColor] = useState(
-    configGlobal.control.options.defaultBackgroundColor
+    configGlobal.control.options.backgroundColor
   );
   const [brightness, setBrightness] = useState(
-    configGlobal.control.options.defaultBrightness
+    configGlobal.control.options.brightness
   );
   const [shadowIntensity, setShadowIntensity] = useState(
-    configGlobal.control.options.defaultShadowIntensity
+    configGlobal.control.options.shadowIntensity
   );
-  const [zoom, setZoom] = useState(configGlobal.control.options.defaultZoom);
+  const [zoom, setZoom] = useState(configGlobal.control.options.zoom);
   const [loading, setLoading] = useState(true);
   const [controlsVisible, setControlsVisible] = useState(false);
 
@@ -24,9 +25,11 @@ const ModelViewer = ({ item }) => {
     overflowX: "hidden",
     posterColor: "#eee",
     width: "100%",
-    height: ARSupported ? "calc(100vh - 185px)" : "calc(100vh - 360px)",
+    height: ARSupported ? "calc(100vh - 185px)" : "calc(100vh - 140px)",
     filter: `brightness(${brightness})`,
   };
+
+  const location = useLocation();
 
   // Accessing product for full screen start
   const model = useRef();
@@ -53,6 +56,7 @@ const ModelViewer = ({ item }) => {
       modelViewer.addEventListener("preload", () => setLoading(true));
     }
   }, []);
+
   const ListControls = (
     <>
       {configGlobal.control.options.showBackgroundColor && (
@@ -70,9 +74,9 @@ const ModelViewer = ({ item }) => {
           Brightness
           <input
             type="range"
-            min={configGlobal.control.options.minBrightness}
-            max={configGlobal.control.options.maxBrightness}
-            step={configGlobal.control.options.stepBrightness}
+            min={0.1}
+            max={2}
+            step={0.1}
             value={brightness}
             onChange={(e) => setBrightness(e.target.value)}
           />
@@ -83,9 +87,9 @@ const ModelViewer = ({ item }) => {
           Shadow Intensity
           <input
             type="range"
-            min={configGlobal.control.options.minShadowIntensity}
-            max={configGlobal.control.options.maxShadowIntensity}
-            step={configGlobal.control.options.stepShadowIntensity}
+            min={0}
+            max={2}
+            step={0.1}
             value={shadowIntensity}
             onChange={(e) => setShadowIntensity(e.target.value)}
           />
@@ -96,9 +100,9 @@ const ModelViewer = ({ item }) => {
           Zoom
           <input
             type="range"
-            min={configGlobal.control.options.minZoom}
-            max={configGlobal.control.options.maxZoom}
-            step={configGlobal.control.options.stepZoom}
+            min={0.5}
+            max={3}
+            step={0.1}
             value={zoom}
             onChange={(e) => setZoom(e.target.value)}
           />
@@ -106,6 +110,7 @@ const ModelViewer = ({ item }) => {
       )}
     </>
   );
+
   const Control = ARSupported ? (
     <>
       <button
@@ -120,9 +125,7 @@ const ModelViewer = ({ item }) => {
       </div>
     </>
   ) : (
-    <div style={{
-      textAlign: '-webkit-center'
-    }}>
+    <div style={{ textAlign: "-webkit-center" }}>
       <div className={`controls`}>{ListControls}</div>
     </div>
   );
@@ -191,7 +194,7 @@ const ModelViewer = ({ item }) => {
           {!ARSupported && (
             <QRCode
               id={item.name}
-              value={window.location.href}
+              value={`${window.location.origin}${location.pathname}?item=${item.id}`}
               size={110}
               bgColor="#ffffff"
               fgColor="#000000"
