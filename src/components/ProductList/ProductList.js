@@ -69,6 +69,7 @@ const ProductList = () => {
   }, [location.search]);
 
   useEffect(() => {
+    console.log("fileSizes", fileSizes);
     setInitialFileSizes(fileSizes);
   }, []);
 
