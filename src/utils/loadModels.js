@@ -1,7 +1,6 @@
 const loadModels = () => {
   const contextGlb = require.context("../assets/models", false, /\.glb$/);
   const contextUsdz = require.context("../assets/models", false, /\.usdz$/);
-  console.log(contextGlb.keys())
   const models = contextGlb.keys().map((key, index) => {
     const id = index + 1;
     const name = `Item ${id.toString().padStart(2, "0")}`;
@@ -33,7 +32,6 @@ export const loadThumbnails = () => {
     alt: `Item ${index + 1}`,
     index,
   }))
-  console.log(result);
   return result;
 };
 

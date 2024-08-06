@@ -1,0 +1,21 @@
+{
+  "models": {
+    "item_01.glb": 27331512,
+    "item_01.usdz": 4445402,
+    "item_02.glb": 28222436,
+    "item_02.usdz": 4404808,
+    "item_03.glb": 28222436,
+    "item_03.usdz": 4404808,
+    "item_04.glb": 29833840,
+    "item_04.usdz": 4368370,
+    "item_05.glb": 35522292,
+    "item_05.usdz": 4941963
+  },
+  "thumbnails": {
+    "item_01.png": 143926,
+    "item_02.png": 197068,
+    "item_03.png": 152651,
+    "item_04.png": 100122,
+    "item_05.png": 100122
+  }
+}
